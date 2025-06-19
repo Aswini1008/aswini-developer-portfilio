@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { Code, Layers, Tool, Database } from "lucide-react";
+import { Code, Layers, Wrench, Database } from "lucide-react";
 
 const SkillsSection = () => {
   const skillCategories = [
@@ -18,7 +18,7 @@ const SkillsSection = () => {
     },
     {
       title: "Tools",
-      icon: Tool,
+      icon: Wrench,
       color: "from-green-400 to-emerald-400",
       skills: ["GitHub", "VS Code", "Netlify", "Vite"]
     },
