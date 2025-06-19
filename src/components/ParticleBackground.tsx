@@ -1,7 +1,8 @@
+
 import { useCallback } from "react";
 import Particles from "@tsparticles/react";
 import { loadSlim } from "tsparticles-slim";
-import type { Container, Engine } from "@tsparticles/engine";
+import type { Container, Engine } from "tsparticles-slim";
 
 const ParticleBackground = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -34,7 +35,9 @@ const ParticleBackground = () => {
               enable: true,
               mode: "repulse",
             },
-            resize: true,
+            resize: {
+              enable: true,
+            },
           },
           modes: {
             push: {
@@ -73,7 +76,6 @@ const ParticleBackground = () => {
           number: {
             density: {
               enable: true,
-              area: 800,
             },
             value: 80,
           },
