@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
@@ -8,7 +9,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -22,37 +23,52 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const navItems = [
+    { name: "Home", id: "home" },
+    { name: "About", id: "about" },
+    { name: "Experience", id: "experience" },
+    { name: "Skills", id: "skills" },
+    { name: "Projects", id: "projects" },
+    { name: "Contact", id: "contact" },
+  ];
+
   return (
-    <header
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-lg"
+          ? "bg-gray-900/80 backdrop-blur-lg border-b border-purple-500/20"
           : "bg-transparent"
       }`}
     >
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Portfolio
-          </div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+          >
+            Aswini SM
+          </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
-            {["Home", "About", "Projects", "Contact"].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
-                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+            {navItems.map((item) => (
+              <motion.button
+                key={item.name}
+                whileHover={{ scale: 1.1, color: "#a855f7" }}
+                onClick={() => scrollToSection(item.id)}
+                className="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-medium"
               >
-                {item}
-              </button>
+                {item.name}
+              </motion.button>
             ))}
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-purple-500/20 transition-colors"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -60,20 +76,24 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 bg-white rounded-lg shadow-lg">
-            {["Home", "About", "Projects", "Contact"].map((item) => (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden mt-4 py-4 bg-gray-900/90 backdrop-blur-lg rounded-lg border border-purple-500/20"
+          >
+            {navItems.map((item) => (
               <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
+                key={item.name}
+                onClick={() => scrollToSection(item.id)}
+                className="block w-full text-left px-4 py-2 text-gray-300 hover:text-purple-400 hover:bg-purple-500/10 transition-colors duration-200"
               >
-                {item}
+                {item.name}
               </button>
             ))}
-          </div>
+          </motion.div>
         )}
       </nav>
-    </header>
+    </motion.header>
   );
 };
 
